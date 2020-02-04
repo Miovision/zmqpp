@@ -1,4 +1,4 @@
-# ZMQPP Cmake build description.
+# ZMQPP Cmake build description.9
 # ==============================
 #
 # CMake should find the zmq libraries / headers automatically if they are
@@ -41,7 +41,7 @@ set( ZMQPP_LIBZMQ_CMAKE   false   CACHE BOOL "libzmq is build through cmake too"
 
 
 set( ZMQPP_BUILD_STATIC   true   CACHE BOOL "Build the ZMQPP static library" )
-set( ZMQPP_BUILD_SHARED   true   CACHE BOOL "Build the ZMQPP dynamic library" )
+set( ZMQPP_BUILD_SHARED   false   CACHE BOOL "Build the ZMQPP dynamic library" )
 
 set( ZMQPP_BUILD_EXAMPLES false   CACHE BOOL "Build the ZMQPP examples" )
 set( ZMQPP_BUILD_CLIENT   false   CACHE BOOL "Build the ZMQPP client" )
@@ -144,8 +144,10 @@ if(WIN32)
 	target_link_libraries(zmqpp ws2_32)
 endif() # WIN32
 
-include(GenerateExportHeader)
-generate_export_header(zmqpp)
+if (ZMQPP_BUILD_SHARED)
+  include(GenerateExportHeader)
+  generate_export_header(zmqpp)
+endif()
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 # Examples
